@@ -1,0 +1,9 @@
+vllm
+llama-index
+llama-index-embeddings-huggingface
+qdrant-client
+llama-index-vector-stores-qdrant
+pymupdf
+sentence-transformers
+# Dowload CUDA-enabled "torch" like so
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
