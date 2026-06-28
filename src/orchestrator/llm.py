@@ -24,6 +24,12 @@ class OrchestratorLLM():
 
         prompt = build_orchestrator_prompt(user_message)
         output = self.llm.generate([prompt], self.sampling_params)
+
+        # REMOVE THIS TESTING SECTION AFTER
+        print("JSON Struct:")
+        print(output)
+        print("JSON Struct End")
+
         tool_decision_json = output[0].outputs[0].text
 
         return tool_decision_json
