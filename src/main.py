@@ -17,4 +17,6 @@ def main():
 
         orchestrator.run_orchestrator(input_text)
 
+if __name__ == "__main__":
+    main()
 
