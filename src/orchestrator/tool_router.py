@@ -16,7 +16,7 @@ class ToolRouter():
 
         }
 
-    def execute_tool(self, tool_name, tool_json_struct):
+    def execute_tool(self, tool_name, tool_args):
 
         # If the returned tool does not exists
         if tool_name not in self.tools:
@@ -25,4 +25,4 @@ class ToolRouter():
         
         # Run each tool with their respective "run()" operation
         # This function should return the output (string format) of each tool, back to the orchestrator
-        return tool.run(tool_json_struct)
+        return tool.run(tool_args)

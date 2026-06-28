@@ -20,11 +20,12 @@ class Orchestrator():
         decision_json_struct = self.llm.tool_decision(user_message)
         
         # Extracting tool name from returned JSON structure
-        json_data = json.loads(decision_json_struct)
-        tool_name = json_data["tool"]
+        tool_name = decision_json_struct["tool"]
+        tool_args = decision_json_struct["args"]
 
         print("LLM tool decision: ", tool_name)
+        print("LLM tool argument: ", tool_args)
 
         # Execute tool
-        result = self.tool_route.execute_tool(tool_name, decision_json_struct)
+        result = self.tool_route.execute_tool(tool_name, tool_args)
         return result

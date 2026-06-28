@@ -5,6 +5,6 @@ class DefaultTool():
 
         print("Deafault tool initialized.")
 
-    def run(tool_json_struct):
+    def run(self, tool_args):
 
         print("Tool running...")

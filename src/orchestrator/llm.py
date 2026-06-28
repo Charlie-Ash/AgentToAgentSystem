@@ -1,7 +1,5 @@
-# remove this import after, only used for testing section
-import json
-
 # Interacts first-hand with the language model
+import json, re
 from vllm import LLM, SamplingParams
 from orchestrator.prompts import build_orchestrator_prompt
 
@@ -22,17 +20,28 @@ class OrchestratorLLM():
             max_tokens=512,  # Max tokens outputted
             repetition_penalty = 1.1  # Penalty to apply if tokens continue repeating.
         )   # top_p; nucleus sampling,
+
+    # Used to check if the output of the tool-routing by the orchestrator is indeed a valid JSON or not
+    def extract_json(text: str):
+        match = re.search(r"\{.*\}", text, re.DOTALL)
+        if not match:
+            raise ValueError(f"No JSON found: {text}")
+        return json.loads(match.group(0))  # JSON structture loaded here
     
     def tool_decision(self, user_message):
 
         prompt = build_orchestrator_prompt(user_message)
         output = self.llm.generate([prompt], self.sampling_params)
 
-        # REMOVE THIS TESTING SECTION AFTER
-        print("JSON Struct:")
-        print(output[0].outputs[0].text)
-        print("JSON Struct End")
+        raw_text = output[0].outputs[0].text
+        print("\nRAW MODEL OUTPUT:\n", raw_text)  # Maybe can remove this in the future
 
-        tool_decision_json = output[0].outputs[0].text
+        # Parse out JSON
+        parsed_out_json = self.extract_json(raw_text)
 
-        return tool_decision_json
+        # Hard validation for correct JSON structure
+        required_keys = {"tool", "action", "args"}
+        if not required_keys.issubset(parsed_out_json.keys()):
+            raise ValueError(f"Invalid schema: {parsed_out_json}")
+
+        return parsed_out_json
