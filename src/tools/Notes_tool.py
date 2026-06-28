@@ -1,5 +1,5 @@
 # Stores information into .txt file
-class RAGTool():
+class NotesTool():
 
     def __init__(self):
         pass
