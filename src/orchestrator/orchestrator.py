@@ -5,7 +5,7 @@ from vllm import LLM
 import json
 
 from orchestrator.tool_router import ToolRouter
-from llm import OrchestratorLLM
+from orchestrator.llm import OrchestratorLLM
 
 class Orchestrator():
 

@@ -1,6 +1,6 @@
 # Interacts first-hand with the language model
 from vllm import LLM, SamplingParams
-from prompts import build_orchestrator_prompt
+from orchestrator.prompts import build_orchestrator_prompt
 
 class OrchestratorLLM():
 
