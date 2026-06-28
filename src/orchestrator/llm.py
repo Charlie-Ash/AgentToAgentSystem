@@ -22,7 +22,7 @@ class OrchestratorLLM():
         )   # top_p; nucleus sampling,
 
     # Used to check if the output of the tool-routing by the orchestrator is indeed a valid JSON or not
-    def extract_json(text: str):
+    def extract_json(self, text: str):
         match = re.search(r"\{.*\}", text, re.DOTALL)
         if not match:
             raise ValueError(f"No JSON found: {text}")
