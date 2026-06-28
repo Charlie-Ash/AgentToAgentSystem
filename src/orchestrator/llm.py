@@ -1,3 +1,6 @@
+# remove this import after, only used for testing section
+import json
+
 # Interacts first-hand with the language model
 from vllm import LLM, SamplingParams
 from orchestrator.prompts import build_orchestrator_prompt
@@ -27,7 +30,7 @@ class OrchestratorLLM():
 
         # REMOVE THIS TESTING SECTION AFTER
         print("JSON Struct:")
-        print(output)
+        print(output[0].outputs[0].text)
         print("JSON Struct End")
 
         tool_decision_json = output[0].outputs[0].text
