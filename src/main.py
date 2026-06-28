@@ -7,6 +7,8 @@ def main():
 
     orchestrator = Orchestrator()
 
+    print("Welcome to the Agent-agent system!")  # Change this into something else in the future, maybe.
+
     while True:
 
         input_text = input(">>> ")
