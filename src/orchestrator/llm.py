@@ -15,8 +15,8 @@ class OrchestratorLLM():
         )  # Use this to install gemma4:26B quantized via Huggingface
 
         self.sampling_params = SamplingParams(
-            temperature=0.65,  # temperture: randomness
-            top_p=0.95,  # top_p; nucleus sampling
+            temperature=0,  # temperture: randomness
+            top_p=1.0,  # top_p; nucleus sampling
             max_tokens=512,  # Max tokens outputted
             repetition_penalty = 1.1  # Penalty to apply if tokens continue repeating.
         )   # top_p; nucleus sampling,
@@ -30,8 +30,21 @@ class OrchestratorLLM():
     
     def tool_decision(self, user_message):
 
-        prompt = build_orchestrator_prompt(user_message)
-        output = self.llm.generate([prompt], self.sampling_params)
+        unformatted_prompt = build_orchestrator_prompt(user_message)
+
+        # Use tokenizers to format "prompt"
+        tokenizer = self.llm.get_tokenizer()
+
+        # Formatted prompt
+        formatted_prompt = tokenizer.apply_chat_template(
+
+            unformatted_prompt,
+            tokenize=False,
+            add_generation_prompt=True,
+
+        )
+
+        output = self.llm.generate([formatted_prompt], self.sampling_params)
 
         raw_text = output[0].outputs[0].text
         print("\nRAW MODEL OUTPUT:\n", raw_text)  # Maybe can remove this in the future

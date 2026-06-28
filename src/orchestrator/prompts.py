@@ -2,7 +2,7 @@
 
 def build_orchestrator_prompt(user_message):
 
-    prompt = f"""
+    SYSTEM_PROMPT = f"""
         You are an orchestrator to a vast agent system. 
         It is your role to decide on a suitble tool within the agent system to use in the user's work.
         Route tools that are connected to other agents accordingly from the user's message.
@@ -86,11 +86,18 @@ def build_orchestrator_prompt(user_message):
             "action": "run",
             "args": {{}}
         }}
-
-        -----------------------
-        USER INPUT
-        -----------------------
-        {user_message}
     """
 
-    return prompt
+    # Have the system prompt and user message split, avoiding using a single, excessivly long prompt that may cause unexpected behaviors
+    messages = [
+        {
+            "role": "system",
+            "content": SYSTEM_PROMPT,
+        },
+        {
+            "role": "user",
+            "content": user_message,
+        }
+    ]
+
+    return messages
